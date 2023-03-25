@@ -1,0 +1,190 @@
+\documentclass[11pt]{article}
+\usepackage[hmargin=1in,vmargin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb,amsfonts,url,sectsty,framed,tcolorbox,framed}
+\newcommand{\pf}{{\bf Proof: }}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newcommand{\qed}{\hfill \rule{2mm}{2mm}}
+
+
+\begin{document}
+\noindent
+\rule{\textwidth}{1pt}
+\begin{center}
+{\bf [CS304] Introduction to Cryptography and Network Security}
+\end{center}
+Course Instructor: Dr. Dibyendu Roy \hfill Winter 2022-2023\\
+Scribed by: Srushti Rathva (202051183) \hfill Lecture (Week 1)
+\\
+\rule{\textwidth}{1pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                     INTRODUCTION                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Introduction}
+\subsection*{Cryptography}
+\textbf{Cryptography} is the practice of using maths algorithms and protocols to \textbf{encod}e and \textbf{decode} messages in order to ensure the \textbf{confidentiality}, \textbf{integrity}, and \textbf{authenticity} of the information being transmitted. \\
+In simple words, We \textbf{develop algorithms for security} in Cryptography.
+
+\subsection*{Cryptoanalysis}
+\textbf{Cryptoanalysis} is the study of methods for obtaining the \textbf{meaning of encrypted information without access to the secret key.} It involves analyzing and attempting to break cryptographic systems and algorithms in order to gain unauthorized access to the contents of encrypted messages. \\ 
+In simple words, We \textbf{try to break security of the designed algorithms} in Cryptoanalysis.
+
+\subsection*{Cryptology}
+\textbf{Cryptology} is the science of \textbf{cryptography} and \textbf{cryptoanalysis}. It encompasses both the study of methods for secure communication and the study of methods for breaking those same methods. \\
+\textbf{Cryptology = Cryptography + Cryptoanalysis} 
+\\ \\
+Cryptography provides following services : \\
+\textbf{Confidentiality} \\
+Protection of personal or sensitive information from being disclosed. \\
+\textbf{Integrity} \\
+Completeness and accuracy of the data. \\
+\textbf{Authentication} \\
+Verifying that someone or something is who or what it is claimed. \\
+\textbf{Non-repudiation} \\
+A mechanism to prove that the sender really sent the message.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%             ENCRYPTION AND DECRYPTION                   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Encryption}
+\textbf{Encryption} is the process of \textbf{encoding a message or data}. \\
+Encryption uses an algorithm and a secret key to transform the original message into a ciphertext that can only be decrypted by someone with the correct key.
+\\ \\ 
+\textbf{ E(P,E) = C} \\
+Where, \\
+E = Encryption Function \\
+P = Plain Text \\
+K = Encyption Key \\
+C = Cipher Text \\
+\\
+For Example, We want to encrypt the message "HELLO" using our custom method. The encrypted message or ciphertext, is obtained by adding or subtracting 5 from each letter of the plaintext.
+\begin{align*}
+H &\rightarrow M \\
+E &\rightarrow J \\
+L &\rightarrow Q \\
+L &\rightarrow Q \\
+O &\rightarrow T
+\end{align*}
+\\
+So the encrypted message is "MJQQT".
+
+\section*{Decryption}
+\textbf{Decryption} is the process of \textbf{decoding a ciphertext message back into its original form}. 
+\\
+It involves using a secret key and the appropriate algorithm to transform the ciphertext back into the original message.
+\\ \\ 
+\textbf{D(C,K) = P} \\
+Where, \\
+E = Decryption Function \\
+P = Plain Text \\
+K = Decyption Key \\
+C = Cipher Text \\
+\\
+For Example, To decrypt the ciphertext message "MJQQT", we can use the same method as the encryption, but this time we will subtract 5 from each letter of the ciphertext.
+\begin{align*}
+M &\rightarrow H \\
+J &\rightarrow E \\
+Q &\rightarrow L \\
+Q &\rightarrow L \\
+T &\rightarrow O
+\end{align*}
+\\
+So the decrypted message is "HELLO".
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                    TYPES OF KEYS                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Types of Keys}
+\begin{tabular}{ | l | l | }
+\hline
+Symmetric Keys & Public Keys  \\
+\hline
+Only one key i.e secret key is used. & Two keys are used public and secret.\\
+\hline
+Both encryption and description keys are equal. & Encryption and description keys are not equal. \\ 
+$ E_k = D_k $ & $ E_k \neq D_k $. \\
+\hline
+\end{tabular}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                     FUNDAMENTALS                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Fundamentals}
+\subsection*{One Way Function}
+$ f : X \rightarrow Y $ is called one way functionif for given $ x \in X $ it is easy to compute f(x) but for given f(x) it is hard to compute x.
+\subsection*{Substitution Box}
+S : $ A \rightarrow B $ with $ \lvert A \rvert \leq \lvert B \rvert $ \\
+S : \{1,2,3,4\} $ \rightarrow $ \{1,2,3\} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       CIPHERS                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Ciphers}
+\subsection*{Caesar Cipher}
+The cipher is named after Julius Caesar. It relies on shifting the letters of a message by an agreed number. \\ 
+E(x,a) = (x+a)mod26 \\
+D(c,a) = (c+26-a)mod26 \\ \\
+\textbf{Encryption} \\
+let a = 5 \\
+Plain text = "ZERO" \\
+Z = (25+5)mod26 = 4 = E \\
+E = (4+5)mod26 = 9 = J \\
+R = (17+5)mod26 = 22 = W \\
+O = (14+5)mod26 = 19 = T \\ 
+Cipher text = "EJWT" \\ \\
+\textbf{Decryption} \\
+let a = 5 \\
+Cipher text = "EJWT" \\
+E = (4+26-5)mod26 = 25 = Z \\
+J = (9+26-5)mod26 = 4 = E \\
+W = (22+26-5)mod26 = 17 = R \\
+T = (19+26-5)mod26 = 14 = O \\ 
+Plain text = "ZERO" \\
+
+\subsection*{Transposition Cipher}
+The positions of the letters in a message are rearranged to form a new message.\\ \\
+\textbf{Encryption and Decryption} \\ \\
+e = 
+$ \begin{pmatrix}
+1 & 2 & 3 & 4 & 5 & 6\\
+6 & 4 & 1 & 3 & 5 & 2\\
+\end{pmatrix} $
+and d = 
+$ \begin{pmatrix}
+1 & 2 & 3 & 4 & 5 & 6\\
+3 & 6 & 4 & 2 & 5 & 1\\
+\end{pmatrix} $
+\\ \\
+Plain text = "CIPHER" \\
+Cipher text = "RHCPEI" \\ 
+
+\subsection*{Substitution Cipher}
+The positions of the letters in a message are rearranged to form a new message.\\ \\
+\textbf{Encryption and Decryption} \\ \\
+e = 
+$ \begin{pmatrix}
+C & I & P & H & E & R \\ 
+Q & W & E & R & T & Y \\
+\end{pmatrix} $
+\\ \\
+Plain text = "CIPHER" \\
+Cipher text = "QWERTY" \\ 
+
+\subsection*{Affine Cipher}
+Each letter in the plaintext is replaced by a letter some fixed number of positions down the alphabet.\\ \\
+\textbf{Encryption and Decryption} \\ 
+E(x) = (ax + b) mod 26 \\
+$ D(x) = a^{-1}(x - b) mod 26 $ \\ 
+
+\subsection*{Playfair Cipher}
+It uses a 5x5 matrix of letters, known as the "key square", to encode pairs of letters in the plaintext. \\
+The key square is constructed using a keyword, and the remaining letters of the alphabet are added in a row-wise fashion. \\ \\
+\textbf{Encryption and Decryption} \\ 
+To encode the plaintext, the message is first broken into digraphs (pairs of letters), and then the positions of the letters in the key square are determined. \\
+The letters in the digraph are then replaced according to a set of rules based on their positions in the key square. To decode the message, the same process is followed in reverse.
+
+\end{document}
