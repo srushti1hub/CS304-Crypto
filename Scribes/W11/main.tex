@@ -1,0 +1,96 @@
+\documentclass[11pt]{article}
+\usepackage[hmargin=1in,vmargin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb,amsfonts,url,sectsty,framed,tcolorbox,framed,graphicx,bm}
+\newcommand{\pf}{{\bf Proof: }}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newcommand{\qed}{\hfill \rule{2mm}{2mm}}
+
+\begin{document}
+\noindent
+\rule{\textwidth}{1pt}
+\begin{center}
+{\bf [CS304] Introduction to Cryptography and Network Security}
+\end{center}
+Course Instructor: Dr. Dibyendu Roy \hfill Winter 2022-2023 \\
+Scribed by: Srushti Rathva (202051183) \hfill Lecture (Week 11) \\
+\rule{\textwidth}{1pt}
+
+\section*{RSA}
+gcd($a,m$) = 1 \\
+$S = \{x $ mod $m \}$ \\
+$S = \{r_{1},r_{2},...,r_{m}\}$ \\
+$S_{1} = \{ar_{1},ar_{2},...,ar_{m}\}$ \\
+$a_{i} = a_{j}$ \hspace*{3cm}$r_{i} \neq r_{j}$ \\
+$ar_{i} \equiv ar_{j}$ (mod $m$)  \hspace*{1cm}$r_{i} \not\equiv r_{j}$ (mod $m$) \\\\
+As, gcd($a,m$) = 1 \\
+$\implies 1 = ab + ms \\
+\implies \exists b$ such that $ab \equiv 1$ (mod $m$) \\
+$\implies ar_{i} \equiv ar_{j}$ (mod $m$) \\
+$\implies bar_{i} \equiv bar_{j}$ (mod $m$) \\
+$\implies r_{i} \equiv r_{j}$ (mod $m$) 
+
+\section*{Euler's Theorem}
+If gcd($a,m$) = 1,then \\
+$a^{\phi(m)} \equiv 1$ (mod $m$) \\
+$\implies S = \{x | gcd(a.m) = 1\}$ \\
+$\implies S = \{S_{1},S_{2},...,S_{\phi(m)}\}$ \\\\
+gcd($S_{i},m$) = 1 \\
+$S_{1} = \{aS_{1},aS_{2},...,aS_{\phi(m)}\}$ \\
+$aS_{i} \not\equiv aS_{j}$ (mod $m$) \\\\
+If $aS_{i} \equiv aS_{j}$ (mod $m$) \\
+$\implies S_{i} \equiv S_{j}$ (mod $m$) \\
+$|S| = \phi(m)$ \\
+$|S_{i}| = \phi(m)$ \\
+$S_{i} \equiv aS_{j}$ (mod$m$) \\\\
+$\Pi^{\phi(m)}_{i=1} S_{i} \equiv \Pi^{\phi(m)}_{j=1} aS_{i}$ (mod $m$)\\\\
+$\Pi^{\phi(m)}_{i=1} S_{i} \equiv a^{\phi(m)}\Pi^{\phi(m)}_{j=1} S_{i}$ (mod $m$) \\\\
+As gcd($a,m$) = 1\\
+$\implies a^{\phi(m)} \equiv 1$(mod $m$) 
+
+\section*{Format's Theorem}
+If $p$ is the prime number and $p X a$ then, \\
+$a^{p-1} = 1$ (mod $p$) \\
+$\phi(p) = p-1$ \\
+$p X a \implies $gcd($a,p$) =1 \\
+$a^{\phi(p)} \equiv 1$ (mod $p$) \\
+$a^{p-1} \equiv 1$ (mod $p$) \\
+$a^{p} \equiv a$ (mod $p$) \\\\
+If $p \vert a$ \\
+$a \equiv 0$ mod$p$ \\
+$a^p \equiv a$ mod$p$ 
+
+\section*{RSA CryptoSystem}
+1. $n = pq \hspace{0.5cm} p,q \rightarrow$ primes \\ 
+2. Plaintext Space = $Z_n$ and Ciphertext Space = $Z_n$ \\
+3. Key Space = $ \{k = (n,p,q,e,d) \vert ed \equiv 1$ (mod $p$)$\}$\\\
+4. Encryption : $Enc(x,k) = c = x^e$(mod $n$) \\
+5. Decryption :  $Dec(c,k) = x = c^d$(mod $n$) \\
+\\
+\textbf{Proof :}\\
+$ed \equiv 1$ (mod $\phi(m)$) \\
+$ed - 1 = t\phi(m)$ \\
+$1 = ed + t_1\phi(m)$ \\
+1 = gcd($e,\phi(m)$) = $ed + t_1\phi(m)$ \\
+\\
+$c = x^e$ (mod n) \\
+$x = c^s$ (mod n) \\
+$c^d = (x^e)^d$ (mod n)  = $x^{ed}$ (mod n) \\
+$\hspace*{0.45cm}= x^{1+t\phi(n)}$ (mod n) \\
+$\hspace*{0.45cm}= x x^{t\phi(n)}$ (mod n) \\
+$\hspace*{0.45cm}= x x^{t[p-1][q-1]}$ (mod n) \hspace{4cm} $\phi(n) = \phi(pq) = (p-1)(q-1)$\\
+$\hspace*{0.45cm}=  x x^{t[p-1][q-1]}$ (mod pq) \\
+$c^d \equiv x$ (mod n) \\
+\\
+\textbf{Alice} \hspace{7.5cm} \textbf{Bob} \\
+$n = pq $ \hspace{7.5cm} $x$ \\
+$ed \equiv 1$ (mod $\phi(m)$) \hspace{5.3cm} $y = x^e$ (mod n)\\
+Secret key : $(p,q,d)$ \\
+Public key : $(n,e)$ \\
+$p,q \rightarrow$ large prime numbers, Finding $p,q$ from $n$ is computationally hard. \\
+
+\end{document}
